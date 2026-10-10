@@ -1,0 +1,19 @@
+{
+  "name": "proxispeak",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A proximity-based voice chat project",
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n server,client -c green,blue \"npm run dev --workspace server\" \"npm run dev --workspace client\"",
+    "build": "npm run build --workspace client",
+    "typecheck": "npm run typecheck --workspace client",
+    "start": "npm run start --workspace server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

@@ -1,62 +1,74 @@
 # Team workflow
 
+## Four-person team ownership
+
+The project follows the four-work-branch layout in the team diagram. The team
+lead is also `backend-member1` and owns Node.js and Socket.IO; `main` remains
+the stable, reviewed integration branch.
+
+| Member / branch | Primary ownership |
+| --- | --- |
+| Team lead — `backend-member1` | Node.js/Express server, Socket.IO rooms and event contract, backend tests, integration, pull-request reviews, and keeping `main` stable. |
+| `frontend-member1` | Frontend UI and Canvas work. |
+| `frontend-member2` | WebRTC peer connections, microphone/audio lifecycle, and audio UI. |
+| `backend-member2` | Proximity behavior and coordination of signaling requirements with the team lead. |
+
+These are shared responsibility branch names from the team layout. A member
+may create short-lived `feature/<topic>` branches from their work branch for a
+larger task, then merge them back through review. Coordinate edits to shared
+client/server event payloads with the team lead before implementation.
+
 ## Team lead responsibilities
 
 - Keep `main` stable and review/merge pull requests.
-- Coordinate the client/server event contract and resolve integration
-  conflicts.
-- Confirm that a feature's acceptance criteria and tests are included before
-  merging.
-- Configure GitHub collaborator access and protect `main` in repository
-  settings. These settings must be enabled on GitHub; they are not configured
-  by files in this repository.
-
-## Suggested ownership
-
-Assign the roles below to actual teammates; names are intentionally left
-unassigned.
-
-| Role | Suggested scope | Suggested branch |
-| --- | --- | --- |
-| Team lead / integrator | Integration, reviews, shared contracts, releases | `main` for reviewed code; `feature/<topic>` for implementation |
-| Frontend owner | React screens, layout, responsive and accessible UI | `frontend/<username>` |
-| Backend owner | Express API, Socket.IO rooms and server tests | `backend/<username>` |
-| WebRTC owner | Microphone permissions, peer connections, audio lifecycle | `feature/webrtc` |
-| Proximity owner | Proximity model and signaling behavior | `feature/proximity` |
-| QA / integration owner | Test plan, regression checks, integration fixes | `testing/<username>` |
-
-These are responsibility suggestions, not required permanent branches. Create
-short-lived branches for features and pull them into `main` through review.
-Avoid having two people independently edit the same files without first
-agreeing who owns the integration.
+- Implement and maintain the Node.js and Socket.IO server, including the
+  client/server event contract.
+- Coordinate with `backend-member2` on proximity and signaling requirements,
+  and with both frontend members on event payloads and integration.
+- Confirm acceptance criteria and relevant tests are included before merging.
+- Invite the other three teammates with write access and protect `main` in
+  GitHub repository settings. These settings must be enabled on GitHub; they
+  are not configured by files in this repository.
 
 ## Daily branch workflow
 
-Start from an up-to-date `main` and create your own branch:
+Start from an up-to-date `main` and switch to your assigned branch (create it
+from `main` if it does not exist yet):
 
 ```powershell
 git switch main
 git pull origin main
-git switch -c frontend/<your-username>
+git switch -c backend-member1
+```
+
+Use your own assignment instead of `backend-member1`: `frontend-member1`,
+`frontend-member2`, or `backend-member2`. If the branch already exists on
+GitHub, fetch and track it rather than creating a duplicate:
+
+```powershell
+git fetch origin
+git switch --track origin/frontend-member1
 ```
 
 Commit and publish only your branch:
 
 ```powershell
 git status
-git add client/
-git commit -m "Build the room interface"
-git push -u origin frontend/<your-username>
+git add server/
+git commit -m "Add room membership handling"
+git push -u origin backend-member1
 ```
 
 Use a focused `git add` path rather than `git add .` when unrelated files may
 be present. Before switching branches, commit or safely stash unfinished work.
+Replace `server/` and the branch name with paths and branch names in your
+assignment.
 
 To bring newer `main` changes into your branch, switch to your branch first and
 then merge:
 
 ```powershell
-git switch frontend/<your-username>
+git switch backend-member1
 git fetch origin
 git merge origin/main
 ```

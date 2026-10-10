@@ -34,18 +34,26 @@ limited to 64 and 32 characters respectively by the server.
 Signaling events only relay data; they do not create a peer connection or
 transmit audio. The sender and target must be connected to the same room.
 
-## Planned work (not implemented yet)
+## Team ownership and planned work
 
-1. WebRTC owner: microphone permission UX, peer connection lifecycle, audio
-   tracks, cleanup, and tests.
-2. Proximity owner: agree on what proximity means for the product (for example
-   an in-app distance model versus device/location-derived proximity), then
-   implement and document it. Do not add location collection without an explicit
-   product and privacy decision.
-3. Backend owner: persistence/authentication only after the team agrees on
-   requirements; current rooms are ephemeral.
-4. QA owner: test the client/server contract, validation errors, disconnects,
-   and multi-client room behavior.
+- Team lead (`backend-member1`): owns the Node.js/Express and Socket.IO server,
+  room lifecycle, event contract, backend tests, and integration.
+- `frontend-member1`: owns frontend UI and Canvas work.
+- `frontend-member2`: owns WebRTC peer connections, microphone/audio lifecycle,
+  audio UI, cleanup, and tests.
+- `backend-member2`: owns proximity behavior and works with the lead on
+  signaling requirements and contract changes.
+
+The signaling events listed above currently relay payloads only. Full WebRTC
+peer connections and microphone streaming are still future work. The team must
+agree what “proximity” means (for example an in-app distance model versus
+device/location-derived proximity) before implementing it. Do not add location
+collection without an explicit product and privacy decision.
+
+Rooms are currently ephemeral. Add persistence or authentication only after
+the team agrees on requirements. The frontend and backend owners should test
+the shared contract, validation errors, disconnects, and multi-client room
+behavior as part of their changes.
 
 Coordinate contract changes with the team lead and update this document and
 client/server code together in the same pull request where possible.

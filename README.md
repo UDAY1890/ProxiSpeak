@@ -61,6 +61,10 @@ integration responsibilities, and the pull-request process. See
 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the current socket event
 contract and the planned feature boundaries.
 
+The four assigned work branches are `frontend-member1` (UI and Canvas),
+`backend-member1` (team lead; Node.js and Socket.IO), `frontend-member2`
+(WebRTC and audio UI), and `backend-member2` (proximity and signaling).
+
 ## Contributing
 
 Create a feature branch from the latest `main`, make focused changes, run the
